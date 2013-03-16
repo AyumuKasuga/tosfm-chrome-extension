@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+
+    "name": "Ties of senses FM",
+    "version": "0.0.1",
+
+    "icons": {
+        "16": "img/icon-radio-small.png",
+        "32": "img/icon-radio.png",
+        "48": "img/logo.png",
+        "128": "img/logo.png"
+    },
+
+        "permissions": [
+             "http://tosfm.serveblog.net:8000/"
+        ],
+
+    "browser_action": {
+        "default_title": "Ties of senses FM",
+        "default_icon": "img/icon-radio-small.png",
+        "default_popup": "popup.html"
+    },
+
+    "background": {
+    	"page": "background.html"
+  	}
+ }
