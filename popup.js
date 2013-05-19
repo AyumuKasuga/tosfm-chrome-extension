@@ -11,25 +11,14 @@ function play_pause(button, radio){
 	var url = get_stream_url();
 	if (radio.src != url){
 		radio.src = url;
-	}
-	if (radio.paused){
 		radio.play();
 		button.setAttribute("class", "icon-pause");
 	}
-	else{
+	else {
 		radio.pause();
+		radio.src = '';
 		button.setAttribute("class", "icon-play");
 	}
-}
-
-function pause(radio){
-	radio.pause();
-}
-
-function stop(radio){
-	radio.pause();
-	radio.src = '';
-	document.getElementById('play-pause-button').setAttribute("class", "icon-play");
 }
 
 function get_current_song(){
@@ -44,11 +33,14 @@ function get_current_song(){
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", "http://tosfm.serveblog.net:8000", true);
 		xhr.onreadystatechange = function() {
-			var regexp = /Current Song: <\/font><\/td><td><font class=default><b>(.*)<\/b><\/td><\/tr><\/table><br>/im;
-			var fresh_song = xhr.responseText.match(regexp)[1];
-			status.innerHTML = fresh_song;
-			current_song.setAttribute('song', fresh_song);
-			current_song.setAttribute('updated', new Date().getTime());
+			console.log(xhr)
+			if (xhr.status == 200 && xhr.readyState == 4) {
+				var regexp = /Current Song: <\/font><\/td><td><font class=default><b>(.*)<\/b><\/td><\/tr><\/table><br>/im;
+				var fresh_song = xhr.responseText.match(regexp)[1];
+				status.innerHTML = fresh_song;
+				current_song.setAttribute('song', fresh_song);
+				current_song.setAttribute('updated', new Date().getTime());
+			}
 		}
 		xhr.send();
 	}
@@ -94,9 +86,6 @@ function init(){
 	get_current_song();
 
 	var play_pause_button = document.getElementById('play-pause-button');
-	var stop_button = document.getElementById('stop-button');
-	var volume_up_button = document.getElementById('volume-up');
-	var volume_down_button = document.getElementById('volume-down');
 	
 	var radio = get_radio();
 
@@ -117,18 +106,6 @@ function init(){
 
 	play_pause_button.addEventListener('click', function(){
 		play_pause(this, radio);
-	}, false);
-
-	stop_button.addEventListener('click', function(){
-		stop(radio);
-	}, false);
-
-	volume_up_button.addEventListener('click', function(){
-		change_volume(radio, 'up');
-	}, false);
-
-	volume_down_button.addEventListener('click', function(){
-		change_volume(radio, 'down');
 	}, false);
 }
 

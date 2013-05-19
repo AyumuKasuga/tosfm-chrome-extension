@@ -68,6 +68,7 @@ button:focus {
 
 #control-buttons {
 	margin: 5px 0 15px 0;
+	display: inline-block;
 }
 
 #play-pause-button {
@@ -75,7 +76,9 @@ button:focus {
 }
 
 #volume-bar {
-	margin: 0 0 15px 0;
+	margin: 0 0 15px 50px;
+	display: inline-block;
+	vertical-align: bottom;
 }
 
 #play-status {
